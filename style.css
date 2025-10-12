@@ -28,4 +28,14 @@ body {
   aspect-ratio: 1 / 1 ;
   border-radius: 50%;
   border: 2px solid pink;
+  font-size:inherit;
+  font-family: "Offside";
+}
+
+.number {
+  background-color: #b6dae5;
+}
+
+.number:hover{
+  background-color: #82aab6;
 }
