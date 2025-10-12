@@ -1,9 +1,16 @@
+:root {
+  color-scheme: light dark;
+  --dark-bg: #333333;
+  --light-bg: whitesmoke;
+  --display: #b5e8b9;
+}
+
 body {
   margin: 0;
   display: flex;
   justify-content: center;
   font-size: 32px;
-  background-color: black;
+  background-color: light-dark(var(--light-rb), var(--dark-kb));
   min-height: 100vh;
 }
 
@@ -23,7 +30,7 @@ body {
   border: 1px solid black;
   border-radius: 5px;
   height: 15vh;
-  background: #b5e8b9;
+  background: var(--display);
   margin-bottom: 20px;
 }
 
