@@ -39,7 +39,7 @@ body {
   margin-bottom: 20px;
 }
 
-.buttons {
+.buttons,.buttons div{
   width: 100%;
   display: flex;
   flex-flow: wrap;
@@ -54,8 +54,9 @@ button {
   background-color: whitesmoke;
 }
 
-button.clear {
-  flex: 0 0 23.5%;
+.clear,.erase {
+  aspect-ratio: 2 / 1;
+  border-radius: 50px;
 }
 
 button:hover {
