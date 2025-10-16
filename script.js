@@ -17,11 +17,15 @@ const clear = document.querySelector(".clear");
 const binaryOps = [addBtn, subtractBtn, multiplyBtn, divideBtn];
 const unaryOps = [sqrtBtn, square];
 
-let firstNumber = null;
+let numOnMemory = null;
 let operation = null;
-let secondNumber = null;
+let numOnScreen = null;
 let percentIndicator = false;
 let pointIndicator = false;
+
+function getDisplayNum () {
+  return Number(display.textContent);
+}
 
 point.addEventListener("click", e => {
   if (pointIndicator) {
@@ -42,38 +46,50 @@ function writeNumber(event) {
 
 for (let btn of binaryOps){
   btn.addEventListener("click", e => {
-    firstNumber = Number(display.textContent);
+    if (operation) {
+      numOnScreen = getDisplayNum();
+      numOnMemory = operate(numOnMemory, operation, numOnScreen);
+      operation = e.target.className;
+    } else {
+      operation = e.target.className;
+      numOnMemory = getDisplayNum();
+    }
     clearDisplay();
-    operation = e.target.className;
   });
 }
 
 for (let btn of unaryOps){
   btn.addEventListener("click", e => {
-    num = Number(display.textContent);
+    num = getDisplayNum();
     operation = e.target.className;
     display.textContent = operate(num, operation);
   });
 }
 
 prcnt.addEventListener("click", e =>{
-  if (firstNumber === null || percentIndicator) {
+  if (numOnMemory === null || percentIndicator) {
     return;
   }
-  secondNumber = Number(display.textContent) * firstNumber / 100 ;
+  numOnScreen = getDisplayNum() * numOnMemory / 100 ;
   display.textContent += "%";
   percentIndicator = true;
 });
 
 equals.addEventListener("click", e => {
-  if (display.textContent.slice(-1) !== "%") {
-    secondNumber = Number(display.textContent);
+  if ((numOnMemory === null)) {
+    console.log("numOnMemory is null")
+    numOnMemory = getDisplayNum();
+    console.log("numOnMemory = ", numOnMemory);
+  } else if (display.textContent.slice(-1) !== "%") {
+    numOnScreen = getDisplayNum();
   }
   clearDisplay();
-  if (firstNumber && operation) {
-    display.textContent = operate(firstNumber, operation, secondNumber);
+  console.log(numOnScreen, operation);
+  if ( !(numOnMemory === null) && operation) {
+    console.log("changing display");
+    display.textContent = operate(numOnMemory, operation, numOnScreen);
   }
-  firstNumber = Number(display.textContent);
+  numOnMemory = null;
 });
 
 function operate(first, op, second = null) {
@@ -110,9 +126,9 @@ erase.addEventListener("click", e => {
 });
 
 clear.addEventListener("click",  e => {
-  firstNumber = null;
+  numOnMemory = null;
   operation = null;
-  secondNumber = null;
-  pointIndicator = false;
+  numOnScreen = null;
+  console.clear();
   clearDisplay();
 });
